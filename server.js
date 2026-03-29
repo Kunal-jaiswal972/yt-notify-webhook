@@ -244,6 +244,23 @@ app.get("/subscribe-now", async (_req, res) => {
   }
 });
 
+app.get("/test-email", async (_req, res) => {
+  try {
+    await sendEmail({
+      title: "Test upload",
+      videoId: "test123",
+      link: "https://www.youtube.com/watch?v=test123",
+      author: "Test Channel",
+      published: new Date().toISOString(),
+      updated: new Date().toISOString(),
+    });
+    res.send("Test email sent");
+  } catch (error) {
+    console.error("Test email failed:", error);
+    res.status(500).send("Test email failed");
+  }
+});
+
 async function start() {
   mustHaveEnv("CHANNEL_ID", CHANNEL_ID);
   mustHaveEnv("CALLBACK_BASE_URL", CALLBACK_BASE_URL);
